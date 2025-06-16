@@ -1,9 +1,15 @@
-How to run the app
+# Notes App
+A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockAPI**. It supports creating, editing, deleting, and searching notes — with responsive design and dark mode support.
 
-- first run npm install command to install all the dependencies
-- run the npm run dev command to run the project
+## How to run the app
 
-Features:
+1. First clone the repo : git clone https://github.com/your-username/svelte-notes-app.git
+2. Go to your folder: cd svelte-notes-app
+3. Install dependencies:  npm install 
+4. Run the website: npm run dev
+5. Visit the app: http://localhost:5173/
+
+## Features:
 1. Create a note.
 2. Edit the note.
 3. Delete the note.
@@ -13,3 +19,22 @@ Features:
 7. You can pin the notes as well to see that note at the top and can also unpin them.
 8. While loading notes, there will be a loading spinner visible.
 
+## TradeOffs
+1. MockAPI is used as the backend to simplify the setup — no real database or auth integration.
+2. Optimistic UI is not implemented; note updates wait for server confirmation.
+3. Notes are sorted based on their creation timestamp (createdAt).
+4. Basic error handling is included but not comprehensive.
+5. Mobile responsiveness is prioritized over desktop-specific UX polish.
+
+## What I'd do with more time
+1. Add localStorage or Theme persistence for dark/light mode.
+2. Improve error handling and add retry mechanisms for API failures.
+3. Add pagination or virtual scrolling for better performance on large note sets.
+4. Integrate user authentication (login/signup).
+5. Add rich-text editor support (Markdown or WYSIWYG).
+6. Write unit and integration tests for critical components.
+
+## Tech Stack
+1. Svelte
+2. Mock API
+3. Tailwind CSS
