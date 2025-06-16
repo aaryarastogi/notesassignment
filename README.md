@@ -13,11 +13,11 @@ A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockA
 
 ## Features:
 1. CRUD (Create , Read , Update , Delete) operations on notes.
-4. Pagination feature means only 20 notes visible on one page all the other notes you can see by clicking on previous or next button.
-5. Searching a note by its title.
-6. Sorting the notes on the of their creation time.
-7. You can pin the notes as well to see that note at the top and can also unpin them.
-8. While loading notes, there will be a loading spinner visible.
+2. Pagination feature means only 20 notes visible on one page all the other notes you can see by clicking on previous or next button.
+3. Searching a note by its title.
+4. Sorting the notes on the of their creation time.
+5. You can pin the notes as well to see that note at the top and can also unpin them.
+6. While loading and updating notes there will be a loading spinner visible.
 
 ## TradeOffs
 1. MockAPI is used as the backend to simplify the setup — no real database or auth integration.
