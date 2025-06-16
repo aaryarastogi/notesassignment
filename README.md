@@ -12,9 +12,7 @@ A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockA
 5. Visit the app: http://localhost:5173/
 
 ## Features:
-1. Create a note.
-2. Edit the note.
-3. Delete the note.
+1. CRUD (Create , Read , Update , Delete) operations on notes.
 4. Pagination feature means only 20 notes visible on one page all the other notes you can see by clicking on previous or next button.
 5. Searching a note by its title.
 6. Sorting the notes on the of their creation time.
