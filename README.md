@@ -5,7 +5,7 @@ A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockA
 
 ## How to run the app
 
-1. First clone the repo : git clone https://github.com/your-username/svelte-notes-app.git
+1. First clone the repo : https://github.com/aaryarastogi/notesassignment.git
 2. Go to your folder: cd svelte-notes-app
 3. Install dependencies:  npm install 
 4. Run the website: npm run dev
