@@ -1,6 +1,8 @@
 # Notes App
 A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockAPI**. It supports creating, editing, deleting, and searching notes — with responsive design and dark mode support.
 
+**Deployed Link** : https://quicknotex.netlify.app/
+
 ## How to run the app
 
 1. First clone the repo : git clone https://github.com/your-username/svelte-notes-app.git
