@@ -2,13 +2,13 @@
   import { onMount } from "svelte";
   import { API_URL } from "./lib/api";
   import NoteCard from "./components/NoteCard.svelte";
-    import AddNoteForm from "./components/AddNoteForm.svelte";
-    import EditNoteModal from "./components/EditNoteModal.svelte";
-    import DeleteConfirmModal from "./components/DeleteConfirmModal.svelte";
-    import PaginationControls from "./components/PaginationControls.svelte";
-    import SearchBar from "./components/SearchBar.svelte";
-
-  let notes = [];
+  import AddNoteForm from "./components/AddNoteForm.svelte";
+  import EditNoteModal from "./components/EditNoteModal.svelte";
+  import SearchBar from "./components/SearchBar.svelte";
+  import ConfirmationDeleteModal from "./components/ConfirmationDeleteModal.svelte";
+  import Pagination from "./components/Pagination.svelte";
+ 
+  let notes = []; 
   let title = '';
   let content = '';
   let showForm = false;
@@ -18,9 +18,15 @@
   let currentPage = 1;
   const notesPerPage = 20;
 
-  $: filteredNotes = notes.filter(note =>
-    note.title.toLowerCase().includes(searchTerm.toLowerCase()) 
-  );
+  $: filteredNotes = notes
+  .filter(note =>
+    note.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+  .sort((a, b) => {
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   $: totalPages = Math.ceil(filteredNotes.length / notesPerPage);
 
@@ -29,48 +35,61 @@
     currentPage * notesPerPage
   );
 
+  let isLoading = true;
+
   onMount(async () => {
-    await fetchNotes();
+    try {
+      const response = await fetch('https://684f0b5bf0c9c9848d29ef4d.mockapi.io/api/notes');
+      const data = await response.json();
+      notes = data;
+    } catch (err) {
+      console.error('Failed to fetch notes', err);
+    } finally {
+      isLoading = false;
+    }
   });
 
-  async function fetchNotes() {
-    try {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      notes = data.slice().sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      });
-    } catch (err) {
-      console.error('Error fetching notes:', err);
-    }
-  }
-
   //to add note
-  async function addNote(noteTitle, noteContent) {
+  async function createNote(noteTitle, noteContent) {
     if (!noteTitle || !noteContent) return;
 
-    const noteData = {
+    const noteStructure = {
       title: noteTitle,
       content: noteContent,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      pinned: false
     };
-
     try {
-      const res = await fetch(API_URL, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(noteData),
+        body: JSON.stringify(noteStructure),
       });
 
-      const savedNote = await res.json();
+      const savedNote = await response.json();
       notes = [savedNote, ...notes];
     } catch (err) {
       console.error('Error adding note:', err);
     }
   }
 
+  async function togglingPin(note) {
+    try {
+      const response = await fetch(`${API_URL}/${note.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...note, pinned: !note.pinned })
+      });
+      const updated = await response.json();
+      notes = notes.map(n => n.id === updated.id ? updated : n);
+    } catch (err) {
+      console.error('Error toggling pin:', err);
+    }
+  }
+
+
   //to delete the note
-  function confirmDelete(note) {
+  function deleteConfirmation(note) {
     noteToDelete = note;
     showConfirmModal = true;
   }
@@ -82,7 +101,7 @@
 
       notes = notes.filter(note => note.id !== noteToDelete.id);
     } catch (err) {
-      console.error('Error deleting note:', err);
+      console.error('Error in deleting the note:', err);
     } finally {
       showConfirmModal = false;
       noteToDelete = null;
@@ -93,15 +112,16 @@
   let showEditModal = false;
   let editingNote = null;
   let isSaving = false;
+  
   function editNote(note) {
     console.log("Edit triggered", note);
     editingNote = { ...note };
     showEditModal = true;
   }
-  async function saveModalEdit() {
+  async function savedEditedNote() {
     isSaving = true;
     try {
-      const res = await fetch(`${API_URL}/${editingNote.id}`, {
+      const response = await fetch(`${API_URL}/${editingNote.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -111,12 +131,12 @@
         })
       });
 
-      const updatedNote = await res.json();
+      const updatedNote = await response.json();
       notes = notes.map(n => n.id === updatedNote.id ? updatedNote : n);
       showEditModal = false;
       editingNote = null;
     } catch (err) {
-      console.error('Error updating note:', err);
+      console.error('Error in updating the note:', err);
     } finally {
       isSaving = false;
     }
@@ -127,20 +147,17 @@
   <h1 class="text-3xl font-bold">My Notes</h1>
   <p class="text-gray-700 mb-6">Capture your thoughts and ideas</p>
 
-  <!-- Note Form -->
   {#if showForm}
     <AddNoteForm
       title={title}
       content={content}
       setTitle={(val) => title = val}
       setContent={(val) => content = val}
-      addNote={addNote}
+      addNote={createNote}
       closeForm={() => showForm = false}
     />
   {/if}
 
-
-  <!-- search bar -->
   <SearchBar
     bind:searchTerm
     showForm={showForm}
@@ -148,17 +165,27 @@
     onSearch={() => currentPage = 1}
   />
 
-
-  <!-- Notes List -->
-  <div class="grid md:grid-cols-4 gap-4">
-   {#each paginatedNotes as note}
-      <NoteCard
-        {note}
-        on:edit={(e) => editNote(e.detail)}
-        on:delete={(e) => confirmDelete(e.detail)}
-      />
-    {/each}
-  </div>
+  {#if isLoading}
+    <div class="flex flex-col items-center justify-center py-10 text-gray-600">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mb-3"></div>
+      <p class="text-lg font-medium">Loading notes...</p>
+    </div>
+  {:else}
+    {#if notes.length === 0}
+      <p class="text-center text-gray-500 mt-10">No notes available.</p>
+    {:else}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {#each paginatedNotes as note}
+          <NoteCard
+            {note}
+            on:edit={(e) => editNote(e.detail)}
+            on:delete={(e) => deleteConfirmation(e.detail)}
+            onPinToggle={togglingPin}
+          />
+        {/each}
+      </div>
+    {/if}
+  {/if}
 
   {#if showEditModal && editingNote}
     <EditNoteModal
@@ -166,21 +193,19 @@
       note={editingNote}
       isSaving={isSaving}
       onClose={() => showEditModal = false}
-      onSave={saveModalEdit}
+      onSave={savedEditedNote}
     />
   {/if}
 
-  <PaginationControls
+  <Pagination
     {currentPage}
     {totalPages}
     onNext={() => currentPage++}
     onPrev={() => currentPage--}
   />
 
-
-  <!-- confirmation modal -->
   {#if showConfirmModal && noteToDelete}
-  <DeleteConfirmModal
+  <ConfirmationDeleteModal
       note={noteToDelete}
       onCancel={() => showConfirmModal = false}
       onDelete={deleteConfirmedNote}
