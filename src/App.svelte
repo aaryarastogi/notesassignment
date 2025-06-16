@@ -42,6 +42,8 @@
       const response = await fetch('https://684f0b5bf0c9c9848d29ef4d.mockapi.io/api/notes');
       const data = await response.json();
       notes = data;
+      isDark = localStorage.getItem('theme') === 'dark';
+		  document.documentElement.classList.toggle('dark', isDark);
     } catch (err) {
       console.error('Failed to fetch notes', err);
     } finally {
@@ -93,6 +95,7 @@
     noteToDelete = note;
     showConfirmModal = true;
   }
+
   async function deleteConfirmedNote() {
     try {
       await fetch(`${API_URL}/${noteToDelete.id}`, {
@@ -143,9 +146,9 @@
   }
 </script>
 
-<main class="w-full min-h-screen h-auto p-8 bg-[#E3EAFF]">
+<main class="w-full min-h-screen h-auto p-8 bg-[#E3EAFF] text-black">
   <h1 class="text-3xl font-bold">My Notes</h1>
-  <p class="text-gray-700 mb-6">Capture your thoughts and ideas</p>
+  <p class="text-gray-800 mb-6">Capture your thoughts and ideas</p>
 
   {#if showForm}
     <AddNoteForm
