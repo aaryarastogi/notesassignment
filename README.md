@@ -36,5 +36,5 @@ A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockA
 
 ## Tech Stack
 1. Svelte
-2. Mock API
+2. Mock API , Fetch API
 3. Tailwind CSS
