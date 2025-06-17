@@ -5,9 +5,9 @@
 </script>
 
 <div class="fixed inset-0 bg-transparent backdrop-blur-xl flex items-center justify-center z-50">
-  <div class="bg-white rounded-xl shadow-xl p-6 w-[90%] max-w-md">
-    <h2 class="text-lg font-semibold mb-4">Are you sure you want to delete this note?</h2>
-    <p class="mb-4 text-gray-600">"{note?.title}" will be permanently removed.</p>
+  <div class="bg-notesbackground rounded-xl shadow-xl p-6 w-[90%] max-w-md">
+    <h2 class="text-lg font-semibold mb-4 text-searchbartext text-center">Are you sure you want to delete this note?</h2>
+    <p class="mb-4 text-notescontent text-center">"{note?.title}" will be permanently removed.</p>
     <div class="flex justify-end gap-3">
       <button
         on:click={onCancel}

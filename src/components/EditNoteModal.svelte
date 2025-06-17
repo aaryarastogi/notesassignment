@@ -6,25 +6,25 @@
 </script>
 
 <div class="fixed inset-0 bg-transparent backdrop-blur-xl flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+  <div class="bg-notesbackground rounded-lg shadow-lg w-full max-w-md p-6 relative">
     <button
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl cursor-pointer"
       on:click={onClose}
     >
       ✕
     </button>
-    <h2 class="text-xl font-semibold mb-4">Edit Note</h2>
+    <h2 class="text-xl font-semibold mb-4 text-notesHeading text-center">Edit Note</h2>
 
     <input
       type="text"
       bind:value={note.title}
       placeholder="Edit title"
-      class="w-full mb-3 p-2 border border-gray-300 rounded text-black"
+      class="w-full mb-3 p-2 border border-searchbarborder rounded text-searchbartext"
     />
     <textarea
       bind:value={note.content}
       placeholder="Edit content"
-      class="w-full mb-3 p-2 border border-gray-300 rounded text-black"
+      class="w-full mb-3 p-2 border border-searchbarborder rounded text-searchbartext"
     ></textarea>
 
     <button

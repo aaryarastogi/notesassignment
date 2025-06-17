@@ -11,7 +11,7 @@
     bind:value={searchTerm}
     on:input={onSearch}
     placeholder="Search notes..."
-    class="w-full p-2 border border-gray-300 rounded mr-4 "
+    class="w-full p-2 border border-searchbarborder rounded mr-4 text-searchbartext"
   />
   <button
     on:click={toggleForm}

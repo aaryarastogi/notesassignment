@@ -144,11 +144,25 @@
       isSaving = false;
     }
   }
+  let isDark = false;
+
+  function toggleTheme() {
+    isDark = !isDark;
+    document.documentElement.classList.toggle("dark");
+  }
+
 </script>
 
-<main class="w-full min-h-screen h-auto p-8 bg-[#E3EAFF] text-black">
-  <h1 class="text-3xl font-bold">My Notes</h1>
-  <p class="text-gray-800 mb-6">Capture your thoughts and ideas</p>
+<main class="w-full min-h-screen h-auto p-8 bg-background">
+  <div class="flex flex-row justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-notesHeading">My Notes</h1>
+      <p class="text-thoughts mb-6">Capture your thoughts and ideas</p>
+    </div>
+    <button on:click={toggleTheme} class="text-md mb-8 px-2 py-1 text-togglebuttontext cursor-pointer border-2 border-gray-400 rounded-full shadow-gray-100 bg-togglebutton rounded">
+      {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+    </button>
+  </div>
 
   {#if showForm}
     <AddNoteForm
@@ -175,7 +189,7 @@
     </div>
   {:else}
     {#if notes.length === 0}
-      <p class="text-center text-gray-500 mt-10">No notes available.</p>
+      <p class="text-center text-nonotes mt-10">No notes available.</p>
     {:else}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {#each paginatedNotes as note}
@@ -214,5 +228,4 @@
       onDelete={deleteConfirmedNote}
     />
   {/if}
-
 </main>

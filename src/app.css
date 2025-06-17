@@ -1,1 +1,65 @@
 @import "tailwindcss";
+
+@theme{
+    --color-background : var(--background);
+    --color-notesHeading: var(--notesHeading);
+    --color-nonotes: var(--nonotes);
+    --color-thoughts: var(--thoughts);
+    --color-togglebutton: var(--togglebutton);
+    --color-togglebuttontext: var(--togglebuttontext);
+    --color-notesbackground: var(--notesbackground);
+    --color-notesshadow: var(--notesshadow);
+    --color-notescontent: var(--notescontent);
+    --color-editbuttonbackground: var(--editbuttonbackground);
+    --color-hoverededitbuttonbackground: var(--hoverededitbuttonbackground);
+    --color-notestitle: var(--notestitle);
+    --color-notesborder: var(--notesborder);
+    --color-editbuttontext: var(--editbuttontext);
+    --color-pinbuttontext: var(--pinbuttontext);
+    --color-hoveredpinbuttontext: var(--hoveredpinbuttontext);
+    --color-searchbarborder: var(--searchbarborder);
+    --color-searchbartext: var(--searchbartext);
+}
+
+:root{
+    --background: #E3EAFF;
+    --notesHeading: black;
+    --nonotes: gray;
+    --thoughts: #1F2937;
+    --togglebutton: #cad6f9;
+    --togglebuttontext: black;
+    --notesbackground: white;
+    --notesshadow: #BFDBFE;
+    --notescontent: #374151;
+    --editbuttonbackground: white;
+    --hoverededitbuttonbackground: #E5E7EB;
+    --notestitle: black;
+    --notescontent: black;
+    --notesborder: white;
+    --editbuttontext: #1F2937;
+    --pinbuttontext: #4B5563;
+    --hoveredpinbuttontext: #1F2937;
+    --searchbarborder: #D1D5DB;
+    --searchbartext: black;
+}
+
+.dark{
+    --background: #17202E;
+    --notesHeading: white;
+    --nonotes: white;
+    --thoughts: rgb(228, 228, 228);
+    --togglebutton: #1D2735;
+    --togglebuttontext: white;
+    --notesbackground: #1E2836;
+    --notesshadow: #2d323a;
+    --notescontent: #D1D5DB;
+    --notestitle: #D1D5DB;
+    --editbuttonbackground:#020817;
+    --hoverededitbuttonbackground: #374151;
+    --notesborder: #374151;
+    --editbuttontext: white;
+    --pinbuttontext: white;
+    --hoveredpinbuttontext: rgb(194, 194, 194);
+    --searchbarborder: #374151;
+    --searchbartext: white;
+}

@@ -14,7 +14,7 @@
     Previous
   </button>
 
-  <span class="text-gray-700 font-semibold">Page {currentPage} of {totalPages}</span>
+  <span class="text-notescontent font-semibold">Page {currentPage} of {totalPages}</span>
 
   <button
     on:click={onNext}
