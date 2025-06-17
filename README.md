@@ -18,6 +18,7 @@ A simple and fast Notes app built with **Svelte**, **Tailwind CSS**, and **MockA
 4. Sorting the notes on the of their creation time.
 5. You can pin the notes as well to see that note at the top and can also unpin them.
 6. While loading and updating notes there will be a loading spinner visible.
+7. Dark and Light mode feature is also there.
 
 ## TradeOffs
 1. MockAPI is used as the backend to simplify the setup — no real database or auth integration.
